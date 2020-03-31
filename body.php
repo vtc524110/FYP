@@ -178,31 +178,33 @@ if (isset($_SESSION["username"])) {
         <a class='nav-link collapsed' href='#' data-toggle='collapse' data-target='#collapsePages' aria-expanded='true'
           aria-controls='collapsePages'>
           <i class='fas fa-fw fa-folder'></i>
-          <span>Functions</span>
+          <span>Categories</span>
         </a>
         <div id='collapsePages' class='collapse' aria-labelledby='headingPages' data-parent='#accordionSidebar'>
           <div class='bg-white py-2 collapse-inner rounded'>";
       }
 
 
-          $url = 'http://desmond.business:8080/fyp/getCategoryFirstLvs/';
-          $ch = curl_init($url);
-          curl_setopt($ch, CURLOPT_HTTPGET, true);
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-          $response_json = curl_exec($ch);
-          curl_close($ch);
-          $response = json_decode($response_json, true);
-          $results = $response["results"];
-          foreach ($results as $elm) {
-            echo "
-              <h6 class='collapse-header'>".$elm['category_first_lv_name']."</h6>";
-              $Category2 = $elm['theCategorySecondLvs'];
-              foreach ($Category2 as $element2){
-                $Category3 = $element2['theCategoryThirdLvLv'];
-                foreach ($Category3 as $element3)
-                echo "<a class='collapse-item' href='".$element3['category_third_lv_name'].".php'>".$element3['category_third_lv_name']."</a>";
-              }
-            }
+      $url = 'http://desmond.business:8080/fyp/getCategoryFirstLvs/';
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_HTTPGET, true);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $response_json = curl_exec($ch);
+      curl_close($ch);
+      $response = json_decode($response_json, true);
+      $results = $response["results"];
+      foreach ($results as $elm) {
+        echo "
+              <h6 class='collapse-header'>" . $elm['category_first_lv_name'] . "</h6>";
+        $Category2 = $elm['theCategorySecondLvs'];
+        foreach ($Category2 as $element2) {
+          $Category3 = $element2['theCategoryThirdLvLv'];
+          foreach ($Category3 as $element3)
+            $string = str_replace(' ', '', $element3['category_third_lv_name']);
+          $link = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+          echo "<a class='collapse-item' href='" . $link . ".php'>" . $element3['category_third_lv_name'] . "</a>";
+        }
+      }
 
       ?>
 
@@ -230,7 +232,7 @@ if (isset($_SESSION["username"])) {
           <li class='nav-item active'>
           <a class='nav-link' href='tables.php'>
             <i class='fas fa-fw fa-table'></i>
-            <span>Requested Item</span></a>
+            <span>Post bidding</span></a>
         </li>
           ";
   }
