@@ -1,4 +1,17 @@
 <?php
+
+function call_api($url, $param = "")
+{
+  $url = $url . "/" . $param;
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_HTTPGET, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $response_json = curl_exec($ch);
+  curl_close($ch);
+  $response = json_decode($response_json, true);
+  return $response;
+}
+
 if (isset($_SESSION["username"])) {
   if (isset($_SESSION["authority"])) {
     $authority = $_SESSION["authority"];
@@ -184,16 +197,8 @@ if (isset($_SESSION["username"])) {
           <div class='bg-white py-2 collapse-inner rounded'>";
       }
 
-
-      $url = 'http://desmond.business:8080/fyp/getCategoryFirstLvs/';
-      $ch = curl_init($url);
-      curl_setopt($ch, CURLOPT_HTTPGET, true);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      $response_json = curl_exec($ch);
-      curl_close($ch);
-      $response = json_decode($response_json, true);
-      $results = $response["results"];
-      foreach ($results as $elm) {
+      $categoryList = call_api('http://desmond.business:8080/fyp/getCategoryFirstLvs/')["results"];
+      foreach ($categoryList as $elm) {
         echo "
               <h6 class='collapse-header'>" . $elm['category_first_lv_name'] . "</h6>";
         $Category2 = $elm['theCategorySecondLvs'];
@@ -230,7 +235,7 @@ if (isset($_SESSION["username"])) {
   if ($request_table) {
     echo "
           <li class='nav-item active'>
-          <a class='nav-link' href='tables.php'>
+          <a class='nav-link' href='postBidding.php'>
             <i class='fas fa-fw fa-table'></i>
             <span>Post bidding</span></a>
         </li>
@@ -531,8 +536,8 @@ if (isset($_SESSION["username"])) {
             <div class="modal-body">
 
               <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Your new request has been submitted !</h4>
-                <p>Please be informed that your new request need to be approved by Purchase Manager before dispatch from warehouse. </p>
+                <h4 class="alert-heading">Your request has been submitted !</h4>
+                <p>Please be informed that you request is shown to the public </p>
               </div>
 
             </div>
@@ -557,7 +562,7 @@ if (isset($_SESSION["username"])) {
             <div class="modal-body">
 
               <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading">Your new request has not been submitted !</h4>
+                <h4 class="alert-heading">Your request has not been submitted !</h4>
                 <p>Somethings gone wrong ! Please contact system administrator to fix ! </p>
               </div>
 

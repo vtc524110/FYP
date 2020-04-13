@@ -1,5 +1,6 @@
 <?php
 include 'session.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -60,174 +61,173 @@ include 'session.php';
             ?>
             bidding status are shown as below for follow up</p>
 
+            <button hidden type="button" id="success_btn" class='btn btn-primary btn-icon-split' data-toggle="modal" data-target="#SuccessModal">&nbspSuccess&nbsp</button>
+    <button hidden type="button" id="fail_btn" class='btn btn-primary btn-icon-split' data-toggle="modal" data-target="#FailModal">&nbspFail&nbsp</button>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Get what you want!</h4>
+                        <button type="button" id="close" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form id="postBiddingForm" method="POST" class="well form-horizontal" autocomplete="off">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">ID</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-user"></i></span>
+                                            <input id="ID" name="ID" placeholder="" class="form-control" required="true" value="" type="text" readonly>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Ttile</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="max-width: 100%;"><i class="	glyphicon glyphicon-map-marker"></i></span>
+                                            <input id="title" name="title" placeholder="" class="form-control" required="true" value="" type="text" readonly>
+                                        </div>
+                                        <font id="location_error_id" color="red"></font>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Seller</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="max-width: 100%;"><i class="glyphicon glyphicon-list"></i></span>
+                                            <input id="seller" name="seller" placeholder="" class="form-control" required="true" value="" type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Photo</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="max-width: 100%;"><i class="glyphicon glyphicon-list"></i></span>
+                                            <img src='https://farm4.staticflickr.com/3894/15008518202_c265dfa55f_h.jpg height=' 100' width='100'' />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Status</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="max-width: 100%;"><i class="glyphicon glyphicon-list"></i></span>
+                                            <input id="status" name="status" placeholder="" class="form-control" required="true" value="" type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Bidding Price</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group"><span class="input-group-addon"><i></i></span><input id="price" name="price" placeholder="" class="form-control" required="true" value="" type="text"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">remarks</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span><input id="remarks" name="remarks" placeholder="remarks" class="form-control" required="false" value="" type="text"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Submit Form</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <input id="Return" name="Return" placeholder="Return" class="btn btn-warning" value="Return" type="button" data-dismiss="modal">
+                                        <input id="Submit_Form" name="Submit Form" placeholder="Submit Form" class="btn btn-success" value="Submit Form" type="button" data-dismiss="modal">
+                                        <br />
+
+                                    </div>
+                                </div>
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <br />
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+      
         <!-- Content Row -->
         <div class="limiter">
             <div class="container-table100">
                 <div class="wrap-table100">
                     <div class="table100">
-                        <table>
-                            <thead>
-                                <tr class="table100-head">
+                        <table id="data-table">
+                                            <thead>
+                                                <tr class="table100-head">
 
-                                    <th class="column1">Id</th>
-                                    <th class="column2">Title</th>
-                                    <th class="column3">seller_customer_id</th>
-                                    <th class="column4">Photo</th>
-                                    <th class="column5">Quantity</th>
-                                    <th class="column6">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                                                    <th class="column1">Id</th>
+                                                    <th class="column2">Title</th>
+                                                    <th class="column3">Seller</th>
+                                                    <th class="column4">Photo</th>
+                                                    <th class="column5">Status</th>
+                                                    <th class="column6">Bidding Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                <?php
-                                $url = 'http://desmond.business:8080/fyp/getBiddings';
-                                $ch = curl_init($url);
-                                curl_setopt($ch, CURLOPT_HTTPGET, true);
-                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                                $response_json = curl_exec($ch);
-                                curl_close($ch);
-                                $response = json_decode($response_json, true);
-                                $results = $response["results"];
-                                foreach ($results as $elm) {
-                                    echo "
+                                                <?php
+                                                $biddings = call_api('http://desmond.business:8080/fyp/getBiddings')["results"];
+                                                foreach ($biddings as $elm) {
+                                                    $statusId = $elm['bidding_status_id'];
+                                                    $status = call_api('http://desmond.business:8080/fyp/biddingStatuses', $statusId)["title"];
+                                                    echo "
                                 <tr>
                                 <td class='column1'>" . $elm['id'] . "</td>
                                 <td class='column2'>" . $elm['title'] . "</td>
                                 <td class='column3'>" . $elm['seller_customer_id'] . "</td>
-                                <td class='column4'>" . $elm['bidding_status_id'] . "</td>
                                 <td class='column4'><img src='https://farm4.staticflickr.com/3894/15008518202_c265dfa55f_h.jpg height='100' width='100'' /></td>
-                                </tr>";
-                                }
-                                ?>
-                                <td class="column1">2017-09-29 01:22</td>
-                                <td class="column2">200398</td>
-                                <td class="column3">iPhone X 64Gb Grey</td>
-                                <td class="column4">$999.00</td>
-                                <td class="column5">1</td>
-                                <td class="column6">$999.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-28 05:57</td>
-                                    <td class="column2">200397</td>
-                                    <td class="column3">Samsung S8 Black</td>
-                                    <td class="column4">$756.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$756.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-26 05:57</td>
-                                    <td class="column2">200396</td>
-                                    <td class="column3">Game Console Controller</td>
-                                    <td class="column4">$22.00</td>
-                                    <td class="column5">2</td>
-                                    <td class="column6">$44.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-25 23:06</td>
-                                    <td class="column2">200392</td>
-                                    <td class="column3">USB 3.0 Cable</td>
-                                    <td class="column4">$10.00</td>
-                                    <td class="column5">3</td>
-                                    <td class="column6">$30.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-24 05:57</td>
-                                    <td class="column2">200391</td>
-                                    <td class="column3">Smartwatch 4.0 LTE Wifi</td>
-                                    <td class="column4">$199.00</td>
-                                    <td class="column5">6</td>
-                                    <td class="column6">$1494.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-23 05:57</td>
-                                    <td class="column2">200390</td>
-                                    <td class="column3">Camera C430W 4k</td>
-                                    <td class="column4">$699.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$699.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-22 05:57</td>
-                                    <td class="column2">200389</td>
-                                    <td class="column3">Macbook Pro Retina 2017</td>
-                                    <td class="column4">$2199.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$2199.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-21 05:57</td>
-                                    <td class="column2">200388</td>
-                                    <td class="column3">Game Console Controller</td>
-                                    <td class="column4">$999.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$999.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-19 05:57</td>
-                                    <td class="column2">200387</td>
-                                    <td class="column3">iPhone X 64Gb Grey</td>
-                                    <td class="column4">$999.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$999.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-18 05:57</td>
-                                    <td class="column2">200386</td>
-                                    <td class="column3">iPhone X 64Gb Grey</td>
-                                    <td class="column4">$999.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$999.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-22 05:57</td>
-                                    <td class="column2">200389</td>
-                                    <td class="column3">Macbook Pro Retina 2017</td>
-                                    <td class="column4">$2199.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$2199.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-21 05:57</td>
-                                    <td class="column2">200388</td>
-                                    <td class="column3">Game Console Controller</td>
-                                    <td class="column4">$999.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$999.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-19 05:57</td>
-                                    <td class="column2">200387</td>
-                                    <td class="column3">iPhone X 64Gb Grey</td>
-                                    <td class="column4">$999.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$999.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="column1">2017-09-18 05:57</td>
-                                    <td class="column2">200386</td>
-                                    <td class="column3">iPhone X 64Gb Grey</td>
-                                    <td class="column4">$999.00</td>
-                                    <td class="column5">1</td>
-                                    <td class="column6">$999.00</td>
-                                </tr>
+                                <td class='column5'>" . $status . "</td>
+                                <td class='column5'>";
+                                                    if ($elm['bidding_price'] != null) {
+                                                        echo $elm['bidding_price'];
+                                                    } else {
+                                                        echo "POST new price";
+                                                    }
+                                                    echo "</td></tr>";
+                                                }
+                                                ?>
 
-                            </tbody>
-                        </table>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Supply Chain Management System @ June-2019</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
+                </div>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Supply Chain Management System @ June-2019</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 </body>
 <!-- Bootstrap core JavaScript-->
 
@@ -242,105 +242,106 @@ include 'session.php';
 <!-- Page level plugins -->
 <!-- <script src="vendor/chart.js/Chart.min.js"></script>-->
 <script src="vendor/chart.js/Chart.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
 <!-- Page level custom scripts -->
 
 <script>
-    // Set new default font family and font color to mimic Bootstrap's default styling
-    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-    Chart.defaults.global.defaultFontColor = '#858796';
-
-    var e = document.createElement("script");
-    e.src = 'https://code.jquery.com/jquery-3.4.1.js';
-    e.type = "text/javascript";
-    document.getElementsByTagName("head")[0].appendChild(e);
-
-    var WaitingForConfirm = 0;
-    var WaitingForDispatch = 0;
-    var WaitingForMap = 0;
-    var Shipping = 0;
-    var Total_status = 0;
     $(document).ready(function() {
-        $.ajax({
-            url: 'http://desmond.business:8080/myp/getRequestItems',
-            type: 'get',
-            contentType: 'application/json',
-            success: function(response) {
+      
 
-                var len = 0;
-                if (response != null) {
-                    len = response.length;
-                }
+        var formData;
+        var inputPrice;
+        $("table").on('click', 'tr', function() {
+            var values = $(this).find('td').map(function() {
+                return $(this).text();
+            });
 
-                if (len > 0) {
-                    // Read data and create <option >
-                    for (var i = 0; i < len; i++) {
-                        status = response[i].status
-                        switch (status) {
-                            case "WaitingForConfirm":
-                                WaitingForConfirm = WaitingForConfirm + 1;
-                                break;
-                            case "WaitingForDispatch":
-                                WaitingForDispatch = WaitingForDispatch + 1;
-                                break;
-                            case "WaitingForMap":
-                                WaitingForMap = WaitingForMap + 1;
-                                break;
-                            case "Shipping":
-                                Shipping = Shipping + 1
-                            default:
-                                // code block
-                        }
+            var id = values[0];
+            var title = values[1];
+            var seller = values[2];
+            var status = values[4];
+            var price = values[5];
+            if (status == "Finished") {
+                alert("Bidding finished, come quick next time!");
+            } else {
+                $("#myModal").modal('show');
+                $("#ID").val(id);
+                $("#title").val(title);
+                $("#seller").val(seller);
+                $("#status").val(status);
+                $("#price").val(price);
+                $.ajax({
+                    url: 'http://desmond.business:8080/fyp/getBiddingByID/' + id,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(response) {
+                        formData = response.results;
+                        console.log(formData);
                     }
-                }
-
-                Total_status = WaitingForConfirm + WaitingForDispatch + WaitingForMap + Shipping
-                WaitingForConfirm = Math.round((WaitingForConfirm / Total_status) * 100);
-                WaitingForDispatch = Math.round((WaitingForDispatch / Total_status) * 100);
-                WaitingForMap = Math.round((WaitingForMap / Total_status) * 100);
-                Shipping = Math.round((Shipping / Total_status) * 100);
-
-                $("#WaitingForConfirm_figure").append(" " + WaitingForConfirm + "%");
-                $("#WaitingForDispatch_figure").append(" " + WaitingForDispatch + "%");
-                $("#WaitingForMap_figure").append(" " + WaitingForMap + "%");
-                $("#Shipping_figure").append(" " + Shipping + "%");
-
-                var ctx = document.getElementById("myPieChart");
-                var myPieChart = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ["WaitingForConfirm", "WaitingForDispatch", "WaitingForMap", "Shipping"],
-                        datasets: [{
-                            data: [WaitingForConfirm, WaitingForDispatch, WaitingForMap, Shipping],
-                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#808080'],
-                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#606060'],
-                            hoverBorderColor: "rgba(234, 236, 244, 1)",
-                        }],
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        tooltips: {
-                            backgroundColor: "rgb(255,255,255)",
-                            bodyFontColor: "#858796",
-                            borderColor: '#dddfeb',
-                            borderWidth: 1,
-                            xPadding: 15,
-                            yPadding: 15,
-                            displayColors: false,
-                            caretPadding: 10,
-                        },
-                        legend: {
-                            display: false
-                        },
-                        cutoutPercentage: 80,
-                    },
                 });
             }
+            //alert(values[0]); // first td
+            //alert(values[1]); // second td
+            //alert(values[2]); // third td
+            //alert(values[3]); // fourth td
         });
+
+        $("#price").change(function() {
+            formData.bidding_price = $("#price").val();
+            inputPrice = $("#price").val();
+            console.log(inputPrice);
+        })
+
+        $('#postBiddingForm').validate({ // initialize the plugin
+        rules: {
+          price: {
+            required: true,
+            min : $("#price").val(), 
+            number: true
+          }
+        },
+        messages:{
+            required : "OK",
+        },
+        submitHandler: function(form) { // for demo
+          alert('valid form submitted'); // for demo
+          return false; // for demo
+        }
+      });
+      
+      
+      $('#Submit_Form').click(function() {
+      if ($("#postBiddingForm").validate().form()) {
+
+            var id = $("#ID").val();
+            var title = $("#title").val();
+            var seller = $("#seller").val();
+            var status = $("#status").val();
+            var price = $("#price").val();
+
+            $.ajax({
+                type: "PUT",
+                crossDomain: true,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                url: "http://desmond.business:8080/fyp/putBidding/",
+                data: JSON.stringify(formData), // Note it is important
+                success: function(result) {
+                    $("#success_btn").trigger("click");
+                    console.log("SUCCESS")
+                    //oTable.ajax.reload(null, false);
+                },
+                error: function(result) {
+                    $("#fail_btn").trigger("click");
+                    console.log("FAIL")
+                }
+            });
+        } else {
+          $("#fail_btn").trigger("click");
+                    console.log("FAIL")
+        }
+      })
     });
-
-
-    // Pie Chart Example
 </script>
 
 </html>
